@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebViewClient
 import com.example.gymapp.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,10 +24,14 @@ class MainActivity : AppCompatActivity() {
         binding.webView.loadUrl("http://letssea.co.kr/")
 
     }
-
+    var mBackWait:Long = 0
     override fun onBackPressed() {
         if (binding.webView.canGoBack()){
             binding.webView.goBack()
+        }
+        else if(System.currentTimeMillis() - mBackWait >=2000 ) {
+            mBackWait = System.currentTimeMillis()
+            Snackbar.make(binding.webView,"뒤로가기 버튼을 한번 더 누르면 종료됩니다.",Snackbar.LENGTH_LONG).show()
         }
         else
         {
